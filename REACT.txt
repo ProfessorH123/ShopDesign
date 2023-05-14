@@ -1,0 +1,41 @@
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+
+export default function Listearticle() {
+  const[Listearticles,setListarticles]=useState([])
+
+  useEffect(()=>{
+    axios.get("http://localhost:3001/api/articles").then(res=>{
+      setListarticles(res.data);
+      console.log(Listearticles);
+    })
+
+  })
+  return (
+    <div>
+      <table border={1}>
+        <thead>
+          <th>Image</th>
+          <th>Référence</th>
+          <th>Désignation</th>
+          <th>Quantiter stock</th>
+          <th>Prix de vente</th>
+          <th colSpan={2}>Actions</th>
+        </thead>
+
+        <tbody>
+          {Listearticles.map((art,i)=>
+            <tr key={i}>
+              <td><img src={art.imageartpetitf} alt={art.reference} width={100}></img></td>
+              <td>{art.reference}</td>
+              <td>{art.designation}</td>
+              <td>{art.qtestock}</td>
+              <td>{art.prixVente}</td>
+              <td>Modifier Supprimer</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  )
+}
